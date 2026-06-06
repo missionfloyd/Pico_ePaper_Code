@@ -254,57 +254,36 @@ class EPD_7in5:
         return 0
 
     def Clear(self):
-        
-        high = self.height
-        if( self.width % 8 == 0) :
-            wide =  self.width // 8
-        else :
-            wide =  self.width // 8 + 1
-        
         self.send_command(0x10)
-        for i in range(0, wide):
-            self.send_data1([0xff] * high)
-                
-        self.send_command(0x13) 
-        for i in range(0, wide):
-            self.send_data1([0x00] * high)
-                
+        for i in range(self.width // 8):
+            self.send_data1([0xff] * self.height)
+
+        self.send_command(0x13)
+        for i in range(self.width // 8):
+            self.send_data1([0x00] * self.height)
+
         self.TurnOnDisplay()
-        
+
     def ClearBlack(self):
-        
-        high = self.height
-        if( self.width % 8 == 0) :
-            wide =  self.width // 8
-        else :
-            wide =  self.width // 8 + 1
-        
         self.send_command(0x10)
-        for i in range(0, wide):
-            self.send_data1([0x00] * high)
-                
-        self.send_command(0x13) 
-        for i in range(0, wide):
-            self.send_data1([0xff] * high)
-                
+        for i in range(self.width // 8):
+            self.send_data1([0x00] * self.height)
+
+        self.send_command(0x13)
+        for i in range(self.width // 8):
+            self.send_data1([0xff] * self.height)
+
         self.TurnOnDisplay()
-        
-    def display(self,Image):
-        high = self.height
-        if( self.width % 8 == 0) :
-            wide =  self.width // 8
-        else :
-            wide =  self.width // 8 + 1
-                       
-        self.send_command(0x10) 
-        for i in range(0, wide):
-            self.send_data1(Image[(i * high) : ((i+1) * high)])
-        
-        self.send_command(0x13) 
-        for j in range(high):
-            for i in range(wide):
-                self.send_data(~Image[i + j * wide])
-                
+
+    def display(self, image):
+        self.send_command(0x10)
+        for i in range(self.width // 8):
+            self.send_data1(image[(i * self.height) : ((i+1) * self.height)])
+
+        self.send_command(0x13)
+        for i in range(self.width // 8):
+            self.send_data1([i ^ 0xff for i in image[(i * self.height) : ((i + 1) * self.height)]])
+
         self.TurnOnDisplay()
         
     def display_Partial(self, Image, Xstart, Ystart, Xend, Yend):
