@@ -301,9 +301,8 @@ class EPD_7in5:
             self.send_data1(Image[(i * high) : ((i+1) * high)])
         
         self.send_command(0x13) 
-        for j in range(high):
-            for i in range(wide):
-                self.send_data(~Image[i + j * wide])
+        for i in range(0, wide):
+            self.send_data1([byte ^ 0xff for byte in image[i * self.height : (i + 1) * self.height]])
                 
         self.TurnOnDisplay()
         
