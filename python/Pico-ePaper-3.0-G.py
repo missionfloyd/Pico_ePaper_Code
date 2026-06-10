@@ -167,16 +167,19 @@ class EPD_3in0_G:
 
         self.TurnOnDisplay()
 
-    @micropython.native
-    def Clear(self, color=0x01):
+    @micropython.viper
+    def _clear(self, color: int):
         self.send_command(0x04)
         self.ReadBusyH()
 
         self.send_command(0x10)
-        for i in range(self.height * self.width // 4):
+        for i in range(16800): # self.height * self.width // 4
             self.send_data(color << 6 | color << 4 | color << 2 | color)
 
         self.TurnOnDisplay()
+
+    def Clear(self, color=0x01):
+        self._clear(color)
 
     def sleep(self):
         self.send_command(0x02) # POWER_OFF
