@@ -60,18 +60,15 @@ class EPD_3in0_G:
         self.buffer = bytearray(self.height * self.width // 4)
         self.image = framebuf.FrameBuffer(self.buffer, self.width, self.height, framebuf.GS2_HMSB)
         self.init()
-
-    def delay_ms(self, delaytime):
-        utime.sleep(delaytime / 1000.0)
     
     # Hardware reset
     def reset(self):
         self.reset_pin.value(1)
-        self.delay_ms(200)
+        utime.sleep_ms(200)
         self.reset_pin.value(0)
-        self.delay_ms(2)
+        utime.sleep_ms(2)
         self.reset_pin.value(1)
-        self.delay_ms(200)
+        utime.sleep_ms(200)
 
     def send_command(self, command):
         self.dc_pin.value(0)
@@ -89,13 +86,13 @@ class EPD_3in0_G:
     def ReadBusyH(self):
         print("e-Paper busy H")
         while self.busy_pin.value() == 0:      # 0: idle, 1: busy
-            self.delay_ms(5)
+            utime.sleep_ms(5)
         print("e-Paper busy H release")
 
     def ReadBusyL(self):
         print("e-Paper busy L")
         while self.busy_pin.value() == 1:      # 0: busy, 1: idle
-            self.delay_ms(5)
+            utime.sleep_ms(5)
         print("e-Paper busy L release")
 
     def TurnOnDisplay(self):
@@ -188,7 +185,7 @@ class EPD_3in0_G:
         self.send_command(0x07) # DEEP_SLEEP
         self.send_data(0XA5)
         
-        self.delay_ms(2000)
+        utime.sleep_ms(2000)
         self.reset_pin.value(0)
 
 if __name__=='__main__':
