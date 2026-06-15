@@ -64,17 +64,14 @@ class EPD_7in0_E:
         self.image = framebuf.FrameBuffer(self.buffer, self.width, self.height, framebuf.GS4_HMSB)
         self.init()
 
-    def delay_ms(self, delaytime):
-        utime.sleep(delaytime / 1000.0)
-
     # Hardware reset
     def reset(self):
         self.reset_pin.value(1)
-        self.delay_ms(20)
+        utime.sleep_ms(20)
         self.reset_pin.value(0)
-        self.delay_ms(2)
+        utime.sleep_ms(2)
         self.reset_pin.value(1)
-        self.delay_ms(20)
+        utime.sleep_ms(20)
 
     def send_command(self, command):
         self.dc_pin.value(0)
@@ -91,7 +88,7 @@ class EPD_7in0_E:
     def ReadBusyH(self):
         print("e-Paper busy H")
         while self.busy_pin.value() == 0: # 0: busy, 1: idle
-            self.delay_ms(5)
+            utime.sleep_ms(5)
         print("e-Paper busy H release")
 
     def TurnOnDisplay(self):
@@ -103,7 +100,7 @@ class EPD_7in0_E:
         # EPD hardware init start
         self.reset()
         self.ReadBusyH()
-        self.delay_ms(30)
+        utime.sleep_ms(30)
 
         self.send_command(0xAA)
         self.send_data([0x49, 0x55, 0x20, 0x08, 0x09, 0x18])
@@ -159,7 +156,7 @@ class EPD_7in0_E:
         self.send_command(0x07) # DEEP_SLEEP
         self.send_data(0XA5)
 
-        self.delay_ms(2000)
+        utime.sleep_ms(2000)
         self.reset_pin.value(0)
 
 if __name__=='__main__':
