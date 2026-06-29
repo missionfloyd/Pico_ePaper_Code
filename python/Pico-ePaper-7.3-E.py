@@ -144,6 +144,19 @@ class EPD_7in0_E:
             self.send_data(image[i * self.height : (i + 1) * self.height])
 
         self.TurnOnDisplay()
+    
+    def displayPartial(self, image, x, y, width, height):
+        x_end = x + width - 1
+        y_end = y + height - 1
+        self.send_command(0x83)
+        self.send_data([(x >> 8) & 0x03, x & 0xff, (x_end >> 8) & 0x03, x_end & 0xff,
+                        (y >> 8) & 0x03, y & 0xff, (y_end >> 8) & 0x03, y_end & 0xff, 0x01])
+        self.send_command(0x10)
+        self.send_data([0x00])
+        for i in range(width // 2):
+            self.send_data(image[i * height : (i + 1) * height])
+
+        self.TurnOnDisplay()
 
     def Clear(self, color=0x01):
         self.send_command(0x10)
