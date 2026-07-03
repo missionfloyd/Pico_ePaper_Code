@@ -181,7 +181,7 @@ if __name__=='__main__':
     epd.image.text("Pico_ePaper-7.3-E", 5, 40, epd.BLACK)
     epd.image.text("Raspberry Pi Pico", 5, 70, epd.BLACK)
     epd.display(epd.buffer)
-    epd.delay_ms(5000)
+    utime.sleep_ms(5000)
 
     epd.image.vline(10, 90, 60, epd.BLACK)
     epd.image.vline(120, 90, 60, epd.BLACK)
@@ -190,7 +190,7 @@ if __name__=='__main__':
     epd.image.line(10, 90, 120, 150, epd.BLACK)
     epd.image.line(120, 90, 10, 150, epd.BLACK)
     epd.display(epd.buffer)
-    epd.delay_ms(5000)
+    utime.sleep_ms(5000)
 
     epd.image.fill_rect(10, 180, 50, 50, epd.BLACK)
     epd.image.rect(70, 180, 50, 50, epd.BLACK)
@@ -200,7 +200,7 @@ if __name__=='__main__':
     epd.image.fill_rect(70, 300, 50, 50, epd.BLUE)
     epd.image.fill_rect(10, 360, 50, 50, epd.GREEN)
     epd.display(epd.buffer)
-    epd.delay_ms(5000)
+    utime.sleep_ms(5000)
 
     epd.image.fill_rect(250, 150, 480, 20, epd.BLACK)
     epd.image.fill_rect(250, 310, 480, 20, epd.BLACK)
@@ -219,10 +219,10 @@ if __name__=='__main__':
     epd.image.ellipse(320, 240, 40, 40, epd.WHITE, True)
     epd.image.ellipse(320, 400, 40, 40, epd.WHITE, True)
     epd.display(epd.buffer)
-    epd.delay_ms(5000)
+    utime.sleep_ms(5000)
 
     epd.Clear()
-    epd.delay_ms(2000)
+    utime.sleep_ms(2000)
 
     print("sleep")
     epd.sleep()
