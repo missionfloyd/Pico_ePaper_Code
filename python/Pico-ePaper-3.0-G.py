@@ -191,7 +191,7 @@ class EPD_3in0_G:
 if __name__=='__main__':
     epd = EPD_3in0_G()
     epd.Clear()
-    epd.delay_ms(2000)
+    utime.sleep_ms(2000)
 
     epd.image.fill(epd.WHITE)
     epd.image.text("Waveshare", 5, 10, epd.BLACK)
@@ -202,7 +202,7 @@ if __name__=='__main__':
     epd.image.fill_rect(110, 90, 40, 80, epd.YELLOW)
     epd.init()
     epd.display(epd.buffer)
-    epd.delay_ms(5000)
+    utime.sleep_ms(5000)
     
     epd.init()
     epd.Clear()
