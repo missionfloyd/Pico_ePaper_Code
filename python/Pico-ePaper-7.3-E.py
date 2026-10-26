@@ -41,7 +41,7 @@ DC_PIN          = 8
 CS_PIN          = 9
 BUSY_PIN        = 13
 
-class EPD_7in0_E:
+class EPD_7in3_E:
     def __init__(self):
         self.reset_pin = Pin(RST_PIN, Pin.OUT)
         self.busy_pin = Pin(BUSY_PIN, Pin.IN, Pin.PULL_UP)
@@ -57,7 +57,7 @@ class EPD_7in0_E:
         self.WHITE  = 0x01   #   0001
         self.YELLOW = 0x02   #   0010
         self.RED    = 0x03   #   0011
-        self.ORANGE = 0x04   #   0100
+        #self.ORANGE = 0x04   #   0100
         self.BLUE   = 0x05   #   0101
         self.GREEN  = 0x06   #   0110
         self.buffer = bytearray(self.height * self.width // 2)
@@ -173,7 +173,7 @@ class EPD_7in0_E:
         self.reset_pin.value(0)
 
 if __name__=='__main__':
-    epd = EPD_7in0_E()
+    epd = EPD_7in3_E()
     epd.Clear()
 
     epd.image.fill(epd.WHITE)
@@ -196,9 +196,8 @@ if __name__=='__main__':
     epd.image.rect(70, 180, 50, 50, epd.BLACK)
     epd.image.fill_rect(10, 240, 50, 50, epd.YELLOW)
     epd.image.fill_rect(70, 240, 50, 50, epd.RED)
-    epd.image.fill_rect(10, 300, 50, 50, epd.ORANGE)
-    epd.image.fill_rect(70, 300, 50, 50, epd.BLUE)
-    epd.image.fill_rect(10, 360, 50, 50, epd.GREEN)
+    epd.image.fill_rect(10, 300, 50, 50, epd.BLUE)
+    epd.image.fill_rect(70, 300, 50, 50, epd.GREEN)
     epd.display(epd.buffer)
     utime.sleep_ms(5000)
 
